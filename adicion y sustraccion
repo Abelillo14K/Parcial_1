@@ -1,0 +1,90 @@
+class Nodo:
+    def __init__(self, coeficiente=0, grado=0):
+        self.coeficiente = coeficiente
+        self.grado = grado
+        self.siguiente = None
+
+
+class Polinomio:
+    def __init__(self):
+        self.cabeza = None
+
+    def insertar(self, coeficiente, grado):
+        nuevo_nodo = Nodo(coeficiente, grado)
+        if self.cabeza is None:
+            self.cabeza = nuevo_nodo
+
+        else:
+            actual = self.cabeza
+            anterior = None
+
+            while actual is not None and actual.grado > grado:
+                anterior = actual
+                actual = actual.siguiente
+
+            if actual is not None and actual.grado == grado:
+                actual.coeficiente += coeficiente
+                if actual.coeficiente == 0:
+                    if anterior is None:
+                        self.cabeza = actual.siguiente
+                    else:
+                        anterior.siguiente = actual.siguiente
+
+            else:
+                if anterior is None:
+                    nuevo_nodo.siguiente = self.cabeza
+                    self.cabeza = nuevo_nodo
+
+                else:
+                    anterior.siguiente = nuevo_nodo
+                    nuevo_nodo.siguiente = actual
+
+    def mostrar(self):
+        actual = self.cabeza
+        polinomio = ""
+
+        while actual is not None:
+            if actual.coeficiente != 0:
+                if actual.coeficiente > 0:
+                    polinomio += "+"
+                polinomio += str(actual.coeficiente) + "x^" + str(actual.grado)
+            actual = actual.siguiente
+        print(polinomio)
+
+    def sumar(self, polinomio):
+        resultado = Polinomio()
+        actual = self.cabeza
+
+        while actual is not None:
+            resultado.insertar(actual.coeficiente, actual.grado)
+            actual = actual.siguiente
+        actual = polinomio.cabeza
+
+        while actual is not None:
+            resultado.insertar(actual.coeficiente, actual.grado)
+            actual = actual.siguiente
+        return resultado
+
+
+a = Polinomio()
+a.insertar(5, 2)
+a.insertar(3, 1)
+a.insertar(-10, 0)
+
+b = Polinomio()
+b.insertar(2, 3)
+b.insertar(4, 2)
+b.insertar(3, 0)
+
+
+print("Estado actual de los polinomios:")
+print("a =", end=" ")
+a.mostrar()
+
+print("b =", end=" ")
+b.mostrar()
+
+print("La suma de los polinomios es")
+c = a.sumar(b)
+print("\nResultado de la suma:")
+c.mostrar()

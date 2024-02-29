@@ -1,0 +1,54 @@
+class Polinomios:
+    def __init__(self, coeficientes):
+        self.coeficientes = coeficientes
+
+    def ingresar_compnentes(self, coeficiente):
+        self.coeficientes.insert(0, coeficiente)
+
+    # en esta parte se encarga, de medir la longitud del
+    def mostrar_poli(self):
+        grado = len(self.coeficientes) - 1
+        polinomio = ""
+
+        for i, coeficiente in enumerate(self.coeficientes):
+            # parara hasta que sea igual a 0
+            if coeficiente != 0:
+                if i < grado:
+                    polinomio = polinomio + f"{coeficiente}x^{grado - i}+ "
+
+                else:
+                    polinomio = polinomio + f"{coeficiente}"
+
+        print(polinomio)
+
+
+a = Polinomios([3, 18, -10])
+b = Polinomios([-17, 4, 0, 25])
+
+# muestra el estado actual de los polinomios
+print("Estado actual:")
+print("a =", end=" ")
+a.mostrar_poli()
+
+print("b =", end=" ")
+b.mostrar_poli()
+
+
+opcion = input("Ingrese el Polinomio que desea agregar un componente:")
+num = int(input("Ingrese el coficiente que desea ingresar: "))
+
+if opcion == "a":
+    a.ingresar_compnentes(num)
+
+elif opcion == "b":
+    b.ingresar_compnentes(num)
+
+else:
+    print("Opcion no valida, intente denuevo")
+
+print("Resultado del polinomio")
+print("a =", end=" ")
+a.mostrar_poli()
+
+print("b =", end=" ")
+b.mostrar_poli()
